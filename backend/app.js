@@ -16,6 +16,10 @@ const postRouter = require("./routes/postRoute.js");
 const userRouter = require("./routes/userRoute.js");
 
 //Using Routes
+app.get("/",(req,res)=>{
+    res.send("Welcome to Social media app server, Owner :- Shumail Rafique")
+})
+
 app.use("/api/v1/post", postRouter);
 app.use("/api/v1/users", userRouter);
 
