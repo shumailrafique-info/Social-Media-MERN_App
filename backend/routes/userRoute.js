@@ -10,6 +10,8 @@ const {
   myProfile,
   getSingleUserProfile,
   getAllUsers,
+  frogotPassword,
+  resetPassword,
 } = require("../controllers/user");
 const { isAuthenticated } = require("../middlewares/auth");
 
@@ -34,5 +36,9 @@ router.route("/profile").get(isAuthenticated, myProfile);
 router.route("/any/:id").get(isAuthenticated, getSingleUserProfile);
 
 router.route("/all").get(isAuthenticated, getAllUsers);
+
+router.route("/forgot/password").get(frogotPassword);
+
+router.route("/password/reset/:Token").put(resetPassword);
 
 module.exports = router;

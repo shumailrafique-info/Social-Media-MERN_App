@@ -1,5 +1,7 @@
+const { sendEmail } = require("../middlewares/sendEmail.js");
 const Post = require("../models/post.js");
 const User = require("../models/user.js");
+const crypto = require("crypto");
 
 exports.createUser = async (req, res, next) => {
   try {
@@ -268,6 +270,111 @@ exports.getAllUsers = async (req, res, next) => {
     res.status(200).json({
       success: true,
       users,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+exports.frogotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Email is Required",
+      });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const resetPasswordToken = await user.getResetPasswordToken();
+
+    await user.save();
+
+    const resetUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/api/v1/users/password/reset/${resetPasswordToken}`;
+
+    const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Reset your password by clicking on the link : \n\n ${resetUrl} `;
+
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: "Reset Password",
+        message,
+      });
+
+      res.status(200).json({
+        success: true,
+        message: `Email sent to ${user.email}`,
+      });
+    } catch (error) {
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+      await user.save();
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+exports.resetPassword = async (req, res, next) => {
+  try {
+    const { Token } = req.params;
+
+    if (!Token) {
+      return res.status(404).json({
+        success: false,
+        message: "token is required",
+      });
+    }
+
+    const resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(Token)
+      .digest("hex");
+
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Token is Invalid or has been Expired",
+      });
+    }
+
+    user.password = req.body.password;
+
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password Updated",
     });
   } catch (error) {
     res.status(500).json({
