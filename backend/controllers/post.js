@@ -121,11 +121,13 @@ exports.getPostOfFollwoing = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
 
-    const posts = await Post.find({ owner: { $in: user.following } });
+    const posts = await Post.find({ owner: { $in: user.following } }).populate(
+      "owner likes comments.user"
+    );
 
     return res.status(200).json({
       success: true,
-      posts,
+      posts: posts.reverse(),
     });
   } catch (error) {
     res.status(500).json({
@@ -236,7 +238,6 @@ exports.DeleteCommentOnPost = async (req, res, next) => {
     }
 
     if (post.owner.toString() === req.user._id.toString()) {
-
       if (req.body.commentId === undefined) {
         return res.status(400).json({
           success: false,

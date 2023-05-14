@@ -1,5 +1,6 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 const app = express();
 
@@ -16,11 +17,16 @@ const postRouter = require("./routes/postRoute.js");
 const userRouter = require("./routes/userRoute.js");
 
 //Using Routes
-app.get("/",(req,res)=>{
-    res.send("Welcome to Social media app server, Owner :- Shumail Rafique")
-})
-
 app.use("/api/v1/post", postRouter);
 app.use("/api/v1/users", userRouter);
+
+app.use(express.static(path.join(__dirname, "./build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./build/index.html"));
+});
+app.get("/", (req, res) => {
+  res.send("Welcome to Social media app server, Owner :- Shumail Rafique");
+});
 
 module.exports = app;
