@@ -26,7 +26,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./build/index.html"));
 });
 app.get("/", (req, res) => {
-  res.send("Welcome to Social media app server, Owner :- Shumail Rafique");
+  res.send("Welcome to Social media app server");
 });
 
 module.exports = app;
