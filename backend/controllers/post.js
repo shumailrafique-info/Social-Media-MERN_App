@@ -1,13 +1,18 @@
 const Post = require("../models/post");
 const User = require("../models/user.js");
+const cloudinary = require("cloudinary");
 
 exports.createPost = async (req, res, next) => {
   try {
+    const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
+      folder: "posts",
+    });
+
     const newPostData = {
       caption: req.body.caption,
       image: {
-        public_id: "23213",
-        url: "sample url",
+        public_id: myCloud.public_id,
+        url: myCloud.secure_url,
       },
       owner: req.user._id,
     };
@@ -22,6 +27,7 @@ exports.createPost = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
+      message: "Post Added",
       post,
     });
   } catch (error) {
@@ -229,7 +235,6 @@ exports.commentOnPost = async (req, res, next) => {
 exports.DeleteCommentOnPost = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id);
-
     if (!post) {
       return res.status(404).json({
         success: false,

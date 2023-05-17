@@ -12,6 +12,7 @@ const {
   getAllUsers,
   frogotPassword,
   resetPassword,
+  getMyPosts,
 } = require("../controllers/user");
 const { isAuthenticated } = require("../middlewares/auth");
 
@@ -40,5 +41,7 @@ router.route("/all").get(isAuthenticated, getAllUsers);
 router.route("/forgot/password").get(frogotPassword);
 
 router.route("/password/reset/:Token").put(resetPassword);
+
+router.route("/myposts").get(isAuthenticated,getMyPosts);
 
 module.exports = router;

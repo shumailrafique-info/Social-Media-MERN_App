@@ -7,7 +7,9 @@ exports.createUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ email }).populate(
+      "followers following posts"
+    );
 
     if (user) {
       return res.status(400).json({
@@ -50,7 +52,9 @@ exports.loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    let user = await User.findOne({ email }).select("+password");
+    let user = await User.findOne({ email })
+      .select("+password")
+      .populate("followers following posts");
 
     if (!user) {
       return res.status(400).json({
@@ -226,7 +230,9 @@ exports.deleteProfile = async (req, res, next) => {
 
 exports.myProfile = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id).populate("posts");
+    const user = await User.findById(req.user._id).populate(
+      "posts following followers"
+    );
 
     res.status(200).json({
       success: true,
@@ -242,7 +248,9 @@ exports.myProfile = async (req, res, next) => {
 
 exports.getSingleUserProfile = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id).populate("posts");
+    const user = await User.findById(req.params.id).populate(
+      "posts followers following"
+    );
 
     if (!user) {
       return res.status(404).json({
@@ -270,6 +278,31 @@ exports.getAllUsers = async (req, res, next) => {
     res.status(200).json({
       success: true,
       users,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+exports.getMyPosts = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    const posts = [];
+
+    for (let i = 0; i < user.posts.length; i++) {
+      const post = await Post.findById(user.posts[i]).populate(
+        "likes comments.user owner"
+      );
+      posts.push(post);
+    }
+
+    res.status(200).json({
+      success: true,
+      posts,
     });
   } catch (error) {
     res.status(500).json({

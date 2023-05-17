@@ -9,10 +9,13 @@ const {
   DeleteCommentOnPost,
 } = require("../controllers/post");
 const { isAuthenticated } = require("../middlewares/auth.js");
+const uploadMiddleware = require("../middlewares/multer");
 
 const router = Router();
 
-router.route("/new/upload").post(isAuthenticated, createPost);
+router
+  .route("/new/upload")
+  .post(isAuthenticated, uploadMiddleware.single("file"), createPost);
 
 router.route("/following/posts").get(isAuthenticated, getPostOfFollwoing);
 
