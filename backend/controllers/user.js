@@ -2,6 +2,7 @@ const { sendEmail } = require("../middlewares/sendEmail.js");
 const Post = require("../models/post.js");
 const User = require("../models/user.js");
 const crypto = require("crypto");
+const cloudinary = require("cloudinary");
 
 exports.createUser = async (req, res, next) => {
   try {
@@ -18,13 +19,17 @@ exports.createUser = async (req, res, next) => {
       });
     }
 
+    const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
+      folder: "avatars",
+    });
+
     user = await User.create({
       name,
       email,
       password,
       avatar: {
-        public_id: "sample id",
-        url: "sample url",
+        public_id: myCloud.public_id,
+        url: myCloud.secure_url,
       },
     });
 
@@ -186,6 +191,8 @@ exports.deleteProfile = async (req, res, next) => {
     const following = user.following;
     const userId = user._id;
     //Cloudnary avatar uploading
+
+    await cloudinary.v2.uploader.destroy(req.user.avatar.public_id);
 
     user.deleteOne();
     //Logout User

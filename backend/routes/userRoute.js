@@ -14,11 +14,13 @@ const {
   resetPassword,
   getMyPosts,
 } = require("../controllers/user");
+const uploadMiddleware = require("../middlewares/multer.js");
+
 const { isAuthenticated } = require("../middlewares/auth");
 
 const router = Router();
 
-router.route("/register").post(createUser);
+router.route("/register").post(uploadMiddleware.single("avatar"), createUser);
 
 router.route("/login").post(loginUser);
 
@@ -42,6 +44,6 @@ router.route("/forgot/password").get(frogotPassword);
 
 router.route("/password/reset/:Token").put(resetPassword);
 
-router.route("/myposts").get(isAuthenticated,getMyPosts);
+router.route("/myposts").get(isAuthenticated, getMyPosts);
 
 module.exports = router;

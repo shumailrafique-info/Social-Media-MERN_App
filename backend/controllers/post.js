@@ -21,7 +21,7 @@ exports.createPost = async (req, res, next) => {
 
     const user = await User.findById(req.user._id);
 
-    user.posts.push(post._id);
+    user.posts.unshift(post._id);
 
     await user.save();
 
@@ -62,6 +62,8 @@ exports.deletePost = async (req, res, next) => {
         message: "Unauthorized",
       });
     }
+
+    await cloudinary.v2.uploader.destroy(post.image.public_id);
 
     await post.deleteOne();
 
