@@ -30,7 +30,9 @@ router.route("/follow/:id").get(isAuthenticated, followUser);
 
 router.route("/update/password").put(isAuthenticated, updatePassword);
 
-router.route("/update/profile").put(isAuthenticated, updateProfile);
+router
+  .route("/update/profile")
+  .put(isAuthenticated, uploadMiddleware.single("avatar"), updateProfile);
 
 router.route("/delete/profile").delete(isAuthenticated, deleteProfile);
 
@@ -40,7 +42,7 @@ router.route("/any/:id").get(isAuthenticated, getSingleUserProfile);
 
 router.route("/all").get(isAuthenticated, getAllUsers);
 
-router.route("/forgot/password").get(frogotPassword);
+router.route("/forgot/password/:email").get(frogotPassword);
 
 router.route("/password/reset/:Token").put(resetPassword);
 

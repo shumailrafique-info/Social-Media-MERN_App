@@ -7,7 +7,6 @@ const cloudinary = require("cloudinary");
 exports.createUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
-
     let user = await User.findOne({ email }).populate(
       "followers following posts"
     );
@@ -25,7 +24,7 @@ exports.createUser = async (req, res, next) => {
 
     user = await User.create({
       name,
-      email,
+      email: email.toLowerCase(),
       password,
       avatar: {
         public_id: myCloud.public_id,
@@ -38,7 +37,7 @@ exports.createUser = async (req, res, next) => {
     res
       .status(201)
       .cookie("token", token, {
-        expires: new Date(Date.now() + 60 * 60 * 1000),
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         httpOnly: true,
       })
       .json({
@@ -57,7 +56,7 @@ exports.loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    let user = await User.findOne({ email })
+    let user = await User.findOne({ email: email.toLowerCase() })
       .select("+password")
       .populate("followers following posts");
 
@@ -82,7 +81,7 @@ exports.loginUser = async (req, res, next) => {
     res
       .status(200)
       .cookie("token", token, {
-        expires: new Date(Date.now() + 60 * 60 * 1000),
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         httpOnly: true,
       })
       .json({
@@ -120,8 +119,7 @@ exports.logoutUser = async (req, res, next) => {
 exports.updatePassword = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id).select("+password");
-
-    const { oldPassword, newPassword } = req.body;
+    const { oldPassword, newPassword, confirmPassword } = req.body;
 
     if (!oldPassword || !newPassword) {
       return res.status(400).json({
@@ -137,14 +135,19 @@ exports.updatePassword = async (req, res, next) => {
         message: "Incorrect Old password",
       });
     }
-
-    user.password = newPassword;
-    await user.save();
-
-    res.status(200).json({
-      success: true,
-      message: "Password updated",
-    });
+    if (newPassword === confirmPassword) {
+      user.password = newPassword;
+      await user.save();
+      return res.status(200).json({
+        success: true,
+        message: "Password updated",
+      });
+    } else {
+      res.status(500).json({
+        success: true,
+        message: "Passwords do not match",
+      });
+    }
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -155,7 +158,7 @@ exports.updatePassword = async (req, res, next) => {
 
 exports.updateProfile = async (req, res, next) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, avatar } = req.body;
 
     const user = await User.findById(req.user._id);
 
@@ -163,10 +166,20 @@ exports.updateProfile = async (req, res, next) => {
       user.name = name;
     }
     if (email) {
-      user.email = email;
+      user.email = email.toLowerCase();
     }
 
     //Cloudnary avatar uploading
+    if (avatar !== "empty") {
+      await cloudinary.v2.uploader.destroy(req.user.avatar.public_id);
+
+      const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
+        folder: "avatars",
+      });
+      user.avatar.public_id = myCloud.public_id;
+      user.avatar.url = myCloud.secure_url;
+    } else {
+    }
 
     user.save();
 
@@ -190,7 +203,7 @@ exports.deleteProfile = async (req, res, next) => {
     const followers = user.followers;
     const following = user.following;
     const userId = user._id;
-    //Cloudnary avatar uploading
+    //Cloudnary avatar deleting
 
     await cloudinary.v2.uploader.destroy(req.user.avatar.public_id);
 
@@ -204,6 +217,7 @@ exports.deleteProfile = async (req, res, next) => {
     //Deleting Posts
     for (let i = 0; i < posts.length; i++) {
       const post = await Post.findById(posts[i]);
+      await cloudinary.v2.uploader.destroy(post.image.public_id);
       await post.deleteOne();
     }
 
@@ -282,6 +296,13 @@ exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find({});
 
+    for (let i = 0; i < users.length; i++) {
+      if (users[i]._id.toString() === req.user._id.toString()) {
+        const index = i;
+        users.splice(index, 1);
+      }
+    }
+
     res.status(200).json({
       success: true,
       users,
@@ -321,7 +342,7 @@ exports.getMyPosts = async (req, res, next) => {
 
 exports.frogotPassword = async (req, res, next) => {
   try {
-    const { email } = req.body;
+    const { email } = req.params;
 
     if (!email) {
       return res.status(400).json({
@@ -330,7 +351,7 @@ exports.frogotPassword = async (req, res, next) => {
       });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email.toLowerCase() });
 
     if (!user) {
       return res.status(404).json({
@@ -401,7 +422,7 @@ exports.resetPassword = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "Token is Invalid or has been Expired",
+        message: "Reset Password timeout",
       });
     }
 
