@@ -75,7 +75,7 @@ const Home = () => {
             )}
           </div>
           <div className="homeright">
-            <Typography variant="h5" >All Users</Typography>
+            <Typography variant="h5">All Users</Typography>
             {users && users.length > 0 ? (
               users.map((user) => (
                 <User

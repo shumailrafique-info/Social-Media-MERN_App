@@ -90,6 +90,25 @@ export const postOfFollowingReducer = createReducer(
     },
   }
 );
+export const getSingleUser = createReducer(
+  {},
+  {
+    getSingleUserRequest: (state, action) => {
+      state.loading = true;
+    },
+    getSingleUserSuccess: (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+    },
+    getSingleUserFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    ClearErrorsGSU: (state, action) => {
+      state.error = null;
+    },
+  }
+);
 
 export const allUsersReducer = createReducer(
   {},

@@ -4,6 +4,7 @@ import "./ForgotPassword.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import { forgotPassword } from "../../redux/actions/postAction";
+import { Link } from "react-router-dom";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const ForgotPassword = () => {
             className="forgotPassword-input"
             onChange={(e) => setEmail(e.target.value)}
           />
-
+          <Link style={{padding:".5vmax 0px"}} to={"/"}>Login ?</Link>
           <Button disabled={loading} style={{ color: "white" }} type="submit">
             {loading && loading
               ? "Sending Verification Mail....."

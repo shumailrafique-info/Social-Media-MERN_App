@@ -5,3 +5,9 @@
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
 }
+#__react-alert__ div div div {
+  width: auto !important;
+}
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper{
+ margin: 10px !important; 
+}

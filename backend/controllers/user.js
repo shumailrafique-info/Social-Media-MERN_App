@@ -199,7 +199,7 @@ exports.deleteProfile = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
 
-    const posts = user.posts;
+    let posts = user.posts;
     const followers = user.followers;
     const following = user.following;
     const userId = user._id;
@@ -237,6 +237,34 @@ exports.deleteProfile = async (req, res, next) => {
       await followed.save();
     }
 
+    //removing all comments from all posts
+    const allPosts = await Post.find();
+
+    for (let i = 0; i < allPosts.length; i++) {
+      const post = await Post.findById(allPosts[i]._id);
+
+      for (let j = 0; j < post.comments.length; j++) {
+        if (post.comments[j].user === userId) {
+          post.comments.splice(j, 1);
+        }
+      }
+
+      await post.save();
+    }
+
+    //removing Likes
+    for (let i = 0; i < allPosts.length; i++) {
+      const post = await Post.findById(allPosts[i]._id);
+
+      for (let j = 0; j < post.likes.length; j++) {
+        if (post.likes[j] === userId) {
+          post.likes.splice(j, 1);
+        }
+      }
+
+      await post.save();
+    }
+
     res.status(200).json({
       success: true,
       message: "Profile Deleted",
@@ -267,11 +295,43 @@ exports.myProfile = async (req, res, next) => {
   }
 };
 
+exports.userPosts = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    const posts = [];
+
+    for (let i = 0; i < user.posts.length; i++) {
+      const post = await Post.findById(user.posts[i]).populate(
+        "likes comments.user owner"
+      );
+      posts.push(post);
+    }
+
+    res.status(200).json({
+      success: true,
+      posts,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 exports.getSingleUserProfile = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id).populate(
-      "posts followers following"
-    );
+    const user = await User.findById(req.params.id)
+      .populate("posts followers following posts")
+      .populate({
+        path: "posts",
+        populate: { path: "owner likes" },
+      })
+      .populate({
+        path: "posts",
+        populate: { path: "comments", populate: "user" },
+      });
 
     if (!user) {
       return res.status(404).json({
@@ -294,7 +354,9 @@ exports.getSingleUserProfile = async (req, res, next) => {
 
 exports.getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({
+      name: { $regex: req.query.name, $options: "i" },
+    });
 
     for (let i = 0; i < users.length; i++) {
       if (users[i]._id.toString() === req.user._id.toString()) {
@@ -468,7 +530,7 @@ exports.followUser = async (req, res, next) => {
       await userToFollow.save();
       await loggedInUser.save();
 
-      return res.status(400).json({
+      return res.status(200).json({
         success: false,
         message: `Unfollowed ${userToFollow.name}`,
       });

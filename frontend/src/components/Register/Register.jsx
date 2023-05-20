@@ -23,6 +23,9 @@ const Register = () => {
     dispatch(registerUser(name, email, password, avatar));
   };
   useEffect(() => {
+    if (error === "Please login first") {
+      return;
+    }
     if (error) {
       Alert.error(error);
       dispatch({ type: "ClearErrorsLU" });
@@ -37,7 +40,17 @@ const Register = () => {
     <Fragment>
       <div className="register-form-container">
         <form onSubmit={(e) => SubmitHandler(e)}>
-          <h1 style={{ marginBottom: "20px",borderBottom:"3px solid rgb(225, 90, 41)",width:"30%",textAlign:"center",paddingBottom:"1vmax" }}>Sign Up</h1>
+          <h1
+            style={{
+              marginBottom: "20px",
+              borderBottom: "3px solid rgb(225, 90, 41)",
+              width: "30%",
+              textAlign: "center",
+              paddingBottom: "1vmax",
+            }}
+          >
+            Sign Up
+          </h1>
           <Avatar
             style={{ width: "11vmax", height: "11vmax" }}
             src={avatarprev}

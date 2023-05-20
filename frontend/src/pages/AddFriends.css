@@ -1,0 +1,47 @@
+.search-form-container {
+  width: 100vw;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-form-container > form {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-form-container > form > a {
+  color: rgb(76, 76, 216);
+  cursor: pointer;
+  margin-left: auto;
+  text-decoration: none;
+  margin-right: 10px;
+}
+.search-form-container > form > Button {
+  background-color: rgb(225, 90, 41);
+  margin: 10px 0px;
+  height: 40px;
+  width: 190px;
+  transition: 0.5s ease all;
+  color: white;
+}
+.search-form-container > form > Button:hover {
+  background-color: orangered;
+}
+.search-form-container > form > .search-input {
+  width: 100%;
+  height: 40px;
+  outline: none;
+  padding: 0px 20px;
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+  .search-form-container > form {
+    padding: 1vmax;
+    width: 100%;
+    margin: 0px 10px;
+  }
+}

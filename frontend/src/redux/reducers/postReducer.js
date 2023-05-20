@@ -141,6 +141,18 @@ export const likePostReducer = createReducer(
       state.loading = false;
       state.error = action.payload;
     },
+    //follow user Reducer
+    followUserRequest: (state, action) => {
+      state.loading = true;
+    },
+    followUserSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    followUserFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   }
 );
 

@@ -50,11 +50,11 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-export const getAllUsers = () => async (dispatch) => {
+export const getAllUsers = (name) => async (dispatch) => {
   try {
     dispatch({ type: "allUsersRequest" });
 
-    const { data } = await axios.get("/api/v1/users/all");
+    const { data } = await axios.get(`/api/v1/users/all?name=${name}`);
     dispatch({ type: "allUsersSuccess", payload: data.users });
   } catch (error) {
     dispatch({ type: "allUsersFailure", payload: error.response.data.message });
@@ -84,6 +84,20 @@ export const logoutUser = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "LogoutUserFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getSingleUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: "getSingleUserRequest" });
+
+    const { data } = await axios.get(`/api/v1/users/any/${id}`);
+    dispatch({ type: "getSingleUserSuccess", payload: data.user });
+  } catch (error) {
+    dispatch({
+      type: "getSingleUserFailure",
       payload: error.response.data.message,
     });
   }

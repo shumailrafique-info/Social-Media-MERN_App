@@ -6,13 +6,11 @@ import {
   HomeOutlined,
   Add,
   AddOutlined,
-  SearchOutlined,
-  Search,
   AccountCircle,
   AccountCircleOutlined,
 } from "@mui/icons-material";
-import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
-import AddReactionIcon from '@mui/icons-material/AddReaction';
+import AddReactionOutlinedIcon from "@mui/icons-material/AddReactionOutlined";
+import AddReactionIcon from "@mui/icons-material/AddReaction";
 
 const Header = () => {
   const [tab, setTab] = useState(window.location.pathname);
@@ -27,13 +25,6 @@ const Header = () => {
           <Add style={{ color: "black" }} />
         ) : (
           <AddOutlined />
-        )}
-      </Link>
-      <Link to={"/search"} onClick={() => setTab("/search")}>
-        {tab === "/search" ? (
-          <Search style={{ color: "black" }} />
-        ) : (
-          <SearchOutlined />
         )}
       </Link>
       <Link to={"/addfriends"} onClick={() => setTab("/addfriends")}>

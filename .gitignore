@@ -1,3 +1,4 @@
 /node_modules
 /backend/config/config.env
 /frontend/build
+/frontend/node_modules

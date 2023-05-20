@@ -14,6 +14,8 @@ import UpdateProfile from "./components/UpdateProfile/UpdateProfile";
 import UpdatePassword from "./components/UpdatePassword/UpdatePassword.jsx";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
+import Userprofile from "./components/UserProfile/Userprofile";
+import NotFound from "./components/NotFound/NotFound.jsx";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -60,11 +62,13 @@ function App() {
           <Route
             path="/update/profile"
             element={
-              isAuthenticated && isAuthenticated ? (
-                <UpdateProfile />
-              ) : (
-                <Register />
-              )
+              isAuthenticated && isAuthenticated ? <UpdateProfile /> : <Login />
+            }
+          />
+          <Route
+            path="/user/:id"
+            element={
+              isAuthenticated && isAuthenticated ? <Userprofile /> : <Login />
             }
           />
           <Route
@@ -73,15 +77,31 @@ function App() {
               isAuthenticated && isAuthenticated ? (
                 <UpdatePassword />
               ) : (
-                <Register />
+                <Login />
               )
             }
           />
-          <Route path="/forgot/password" element={<ForgotPassword />} />
+          <Route
+            path="/forgot/password"
+            element={
+              isAuthenticated && isAuthenticated ? (
+                <UpdatePassword />
+              ) : (
+                <ForgotPassword />
+              )
+            }
+          />
           <Route
             path="/api/v1/users/password/reset/:resetPasswordToken"
-            element={<ResetPassword />}
+            element={
+              isAuthenticated && isAuthenticated ? (
+                <Account />
+              ) : (
+                <ResetPassword />
+              )
+            }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </Fragment>

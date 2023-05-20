@@ -1,20 +1,22 @@
-import { Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import { Button, Typography } from "@mui/material";
+import React, { Fragment, useEffect, useState } from "react";
 import User from "../components/User/User";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import { getAllUsers } from "../redux/actions/userAction";
 import Loader from "../components/Loader/Loader";
+import "./AddFriends.css";
 
 const Addfriends = () => {
   const dispatch = useDispatch();
 
   const Alert = useAlert();
   const { users, loading, error } = useSelector((state) => state.allUsers);
+  const [name, setName] = useState("");
 
   useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
+    dispatch(getAllUsers(name));
+  }, [dispatch, name]);
 
   useEffect(() => {
     if (error) {
@@ -23,8 +25,31 @@ const Addfriends = () => {
     }
   }, [dispatch, error, Alert]);
 
+  const SubmitHandler = (e) => {
+    e.preventDefault();
+    dispatch(getAllUsers(name));
+  };
+
   return (
     <div>
+      <Fragment>
+        <div className="search-form-container">
+          <form onSubmit={(e) => SubmitHandler(e)}>
+            <input
+              type="text"
+              placeholder="search by name"
+              required
+              value={name}
+              className="search-input"
+              onChange={(e) => setName(e.target.value)}
+            />
+
+            <Button disabled={loading} style={{ color: "white" }} type="submit">
+              {loading && loading ? "Searching....." : "Search"}
+            </Button>
+          </form>
+        </div>
+      </Fragment>
       {loading && loading ? (
         <Loader />
       ) : (
@@ -37,9 +62,8 @@ const Addfriends = () => {
             alignItems: "center",
             justifyContent: "center",
           }}
-          className="homeright"
+          className=""
         >
-          <Typography variant="h4">All Users</Typography>
           {users && users.length > 0 ? (
             users.map((user1) => (
               <User
@@ -50,7 +74,7 @@ const Addfriends = () => {
               />
             ))
           ) : (
-            <Typography>No Users Yet</Typography>
+            <Typography>No Users found</Typography>
           )}
         </div>
       )}

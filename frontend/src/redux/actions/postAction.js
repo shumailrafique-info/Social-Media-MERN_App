@@ -198,3 +198,16 @@ export const resetPassword =
       });
     }
   };
+
+export const followUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: "followUserRequest" });
+    const { data } = await axios.get(`/api/v1/users/follow/${id}`);
+    dispatch({ type: "followUserSuccess", payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: "followUserFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
