@@ -4,11 +4,11 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: .5vmax 0px;
-  transition: .4s ease all;
+  margin: 0.5vmax 0px;
+  transition: 0.4s ease all;
 }
-.usercard:hover{
- background-color: rgb(223, 220, 220);
+.usercard:hover {
+  background-color: rgb(223, 220, 220);
 }
 .usercard > a {
   text-decoration: none;

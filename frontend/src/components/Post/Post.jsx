@@ -5,9 +5,15 @@ import {
   Favorite,
   FavoriteBorder,
   ChatBubbleOutline,
-  DeleteOutline,
 } from "@mui/icons-material";
-import { Avatar, Button, Typography, Dialog } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Typography,
+  Dialog,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import {
   AddComment,
@@ -81,8 +87,17 @@ const Post = ({
     dispatch(loadUser());
   };
 
+  const [anchorEl, setAnchorEl] = useState(false);
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
-    <div className="post" style={{margin:"1vmax 1vmax"}}>
+    <div className="post" style={{ margin: "1vmax 1vmax" }}>
       <div className="postDetails">
         <div style={{ display: "flex", alignItems: "center" }}>
           <Avatar
@@ -96,21 +111,73 @@ const Post = ({
           </Link>
         </div>
         {isAccount ? (
-          <Button
-            style={{ justifySelf: "flex-end" }}
-            onClick={() => {
-              setCaptionTogglet(!captionToggle);
-            }}
-          >
-            <MoreVert />
-          </Button>
+          // <Button
+          //   style={{ justifySelf: "flex-end" }}
+          //   onClick={() => {
+          //     setCaptionTogglet(!captionToggle);
+          //   }}
+          // >
+          //   <MoreVert />
+          // </Button>
+          <>
+            <Button
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              style={{
+                color: "blue",
+              }}
+            >
+              <MoreVert style={{ fontSize: "2rem" }} />
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem
+                onClick={async () => {
+                  await handleClose();
+                  setCaptionTogglet(!captionToggle);
+                }}
+              >
+                {" "}
+                Edit Caption{" "}
+              </MenuItem>
+
+              {isDelete ? (
+                <MenuItem
+                  style={{ color: "red" }}
+                  onClick={async () => {
+                    await handleClose();
+                    DeletePostHandler();
+                  }}
+                >
+                  {" "}
+                  Delete Post{" "}
+                </MenuItem>
+              ) : null}
+            </Menu>
+          </>
         ) : null}
       </div>
       <p className="PostCaption">{caption}</p>
       <img sty src={postImage} alt="Post" />
       <hr />
 
-      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <button
           onClick={() => setPostLikes(!postLikes)}
           disabled={likes.length === 0 ? true : false}
@@ -146,11 +213,6 @@ const Post = ({
         <Button onClick={() => setPostComment(!postComment)}>
           <ChatBubbleOutline />
         </Button>
-        {isDelete ? (
-          <Button onClick={DeletePostHandler}>
-            <DeleteOutline />
-          </Button>
-        ) : null}
       </div>
 
       <Dialog onClose={() => setPostLikes(!postLikes)} open={postLikes}>
@@ -173,7 +235,12 @@ const Post = ({
       </Dialog>
 
       <Dialog onClose={() => setPostComment(!postComment)} open={postComment}>
-        <div className="DialogBox">
+        <div
+          className="DialogBox"
+          style={{
+            minWidth: window.innerWidth > 600 ? "500px" : `400px`,
+          }}
+        >
           <Typography variant="h4">Comments</Typography>
 
           <form className="commentForm" onSubmit={CommentHandler}>

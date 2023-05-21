@@ -32,11 +32,14 @@ const Login = () => {
   return (
     <Fragment>
       <div className="login-form-container">
+        <div className="login-absolute-1"></div>
+        <div className="login-absolute-2"></div>
+        <div className="login-absolute-3"></div>
+        <div className="login-absolute-4"></div>
         <form onSubmit={(e) => SubmitHandler(e)}>
           <h1
             style={{
               marginBottom: "20px",
-              borderBottom: "3px solid rgb(225, 90, 41)",
               width: "30%",
               textAlign: "center",
               paddingBottom: "1vmax",

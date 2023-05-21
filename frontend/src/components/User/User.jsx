@@ -10,7 +10,10 @@ const User = ({ userId, name, avatar }) => {
         <Avatar
           src={avatar}
           alt={name}
-          sx={{ height: "4vmax", width: "4vmax" }}
+          sx={{
+            height: window.innerWidth > 600 ? "4vmax" : "6vmax",
+            width: window.innerWidth > 600 ? "4vmax" : "6vmax",
+          }}
         />
         <Typography>{name}</Typography>
       </Link>

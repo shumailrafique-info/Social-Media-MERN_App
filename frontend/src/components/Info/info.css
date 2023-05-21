@@ -1,0 +1,14 @@
+.CreatedByLinks{
+    display: flex;
+    color: black;
+}
+.CreatedByLinks >a >svg{
+    color: rgb(5, 135, 241);
+    font-size: 2rem;
+    transition: .3s ease all;
+    margin: 1vmax;
+}
+.CreatedByLinks >a >svg:hover{
+    color: rgb(36, 95, 143);
+    font-size: 2rem;
+}

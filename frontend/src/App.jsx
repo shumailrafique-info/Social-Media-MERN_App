@@ -16,6 +16,7 @@ import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Userprofile from "./components/UserProfile/Userprofile";
 import NotFound from "./components/NotFound/NotFound.jsx";
+import Info from "./components/Info/Info.jsx";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -100,6 +101,10 @@ function App() {
                 <ResetPassword />
               )
             }
+          />
+          <Route
+            path="/created/by"
+            element={<Info/>}
           />
           <Route path="*" element={<NotFound />} />
         </Routes>

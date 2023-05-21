@@ -39,12 +39,15 @@ const Register = () => {
   return (
     <Fragment>
       <div className="register-form-container">
+        <div className="login-absolute-1"></div>
+        <div className="login-absolute-2"></div>
+        <div className="login-absolute-3"></div>
+        <div className="login-absolute-4"></div>
         <form onSubmit={(e) => SubmitHandler(e)}>
           <h1
             style={{
               marginBottom: "20px",
-              borderBottom: "3px solid rgb(225, 90, 41)",
-              width: "30%",
+              width: "100%",
               textAlign: "center",
               paddingBottom: "1vmax",
             }}
@@ -52,7 +55,10 @@ const Register = () => {
             Sign Up
           </h1>
           <Avatar
-            style={{ width: "11vmax", height: "11vmax" }}
+            sx={{
+              height: window.innerWidth > 600 ? "11vmax" : "13vmax",
+              width: window.innerWidth > 600 ? "11vmax" : "13vmax",
+            }}
             src={avatarprev}
           />
           <Button onClick={handleClick} style={{ width: "40%" }}>

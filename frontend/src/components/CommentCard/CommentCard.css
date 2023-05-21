@@ -1,9 +1,12 @@
 .commentUser {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     color: rgba(0, 0, 0, 0.507);
+    background-color: rgb(202, 200, 200);
+    position: relative;
+    border-radius: 20px;
   }
-  
+
   .commentUser > a {
     display: flex;
     text-decoration: none;
@@ -13,13 +16,16 @@
     transition: all 0.5s;
   }
   .commentUser img {
-    height: 3vmax;
-    width: 3vmax;
+    height: 4vmax;
+    width: 4vmax;
     margin: 1vmax;
     border-radius: 100%;
     border: 3px solid rgb(255, 201, 201);
   }
-  
+  .commentOfUser{
+    padding:0vmax 2vmax;
+    text-align: start;
+  }
   .commentUser > a:hover {
     transform: translateY(-10px);
   }
@@ -28,6 +34,12 @@
     color: red;
   }
 
-  @media screen and(max-width:600px){
-    
+  @media screen and (max-width: 600px) {
+    .commentUser img {
+      height: 5.5vmax;
+      width: 5.5vmax;
+      margin: 1vmax;
+      border-radius: 100%;
+      border: 3px solid rgb(255, 201, 201);
+    }
   }

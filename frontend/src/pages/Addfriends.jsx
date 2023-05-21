@@ -59,6 +59,7 @@ const Addfriends = () => {
           <div>{users && users.length > 0 ? (
             users.map((user1) => (
               <User
+              style={{color:"blue"}}
                 key={user1._id}
                 userId={user1._id}
                 name={user1.name}
