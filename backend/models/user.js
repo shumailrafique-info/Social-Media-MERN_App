@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
     public_id: String,
     url: String,
   },
+  coverImage: {
+    public_id: String,
+    url: String,
+  },
   email: {
     type: String,
     required: [true, "Please enter your email"],

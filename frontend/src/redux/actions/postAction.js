@@ -211,3 +211,23 @@ export const followUser = (id) => async (dispatch) => {
     });
   }
 };
+export const addCoverpicture = (coverPic) => async (dispatch) => {
+  try {
+    dispatch({ type: "updateCoverPicRequest" });
+    const { data } = await axios.post(
+      `/api/v1/users/cover`,
+      {
+        cover: coverPic,
+      },
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    dispatch({ type: "updateCoverPicSuccess", payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: "updateCoverPicFailure",
+      payload: error.response.data.message,
+    });
+  }
+};

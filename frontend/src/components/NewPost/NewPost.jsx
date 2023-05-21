@@ -52,7 +52,7 @@ const NewPost = () => {
     <Fragment>
       <div className="newPost">
         <form onSubmit={PostSubmitHandler} className="newPostForm">
-          <Typography variant="h3">New Post</Typography>
+          <Typography style={{fontSize:"2rem"}} variant="h3">Create Post</Typography>
 
           {prevIMG && <img src={prevIMG} alt="post" />}
           <input

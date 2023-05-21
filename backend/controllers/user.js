@@ -377,6 +377,38 @@ exports.getAllUsers = async (req, res, next) => {
   }
 };
 
+exports.addCoverPic = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (!user || !req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
+      folder: "avatar",
+    });
+
+    user.coverImage = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+
+    await user.save();
+
+    res.json({
+      message: "Cover pic Updated",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 exports.getMyPosts = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);

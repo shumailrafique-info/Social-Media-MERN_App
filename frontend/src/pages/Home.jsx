@@ -25,7 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(postsOfFollowingUser());
-    dispatch(getAllUsers());
+    dispatch(getAllUsers(""));
   }, [dispatch]);
 
   useEffect(() => {
@@ -53,7 +53,9 @@ const Home = () => {
         <Loader />
       ) : (
         <div className="home">
-          <div className="homeleft">
+          <div className="homeleft"></div>
+
+          <div className="homemiddle">
             {posts && posts.length > 0 ? (
               posts.map((item) => (
                 <Post
@@ -74,20 +76,32 @@ const Home = () => {
               <Typography variant="h6">No Posts yet</Typography>
             )}
           </div>
+
           <div className="homeright">
-            <Typography variant="h5">All Users</Typography>
-            {users && users.length > 0 ? (
-              users.map((user) => (
-                <User
-                  key={user._id}
-                  userId={user._id}
-                  name={user.name}
-                  avatar={user.avatar.url}
-                />
-              ))
-            ) : (
-              <Typography>No Users Yet</Typography>
-            )}
+            <div
+              style={{
+                position: "sticky",
+                top: "9%",
+                overflow: "auto",
+                height: "90vh",
+              }}
+            >
+              <Typography style={{ textAlign: "center" }} variant="h5">
+                Users
+              </Typography>
+              {users && users.length > 0 ? (
+                users.map((user) => (
+                  <User
+                    key={user._id}
+                    userId={user._id}
+                    name={user.name}
+                    avatar={user.avatar.url}
+                  />
+                ))
+              ) : (
+                <Typography>No Users Yet</Typography>
+              )}
+            </div>
           </div>
         </div>
       )}

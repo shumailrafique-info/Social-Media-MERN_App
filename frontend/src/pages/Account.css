@@ -4,6 +4,7 @@
   /* grid-template-columns: 1fr 400px; */
   flex-direction: column-reverse;
   /* height: 92vh; */
+  position: relative;
 }
 
 .accountleft {
@@ -12,7 +13,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10vmax;
+  padding: 2vmax 25vmax;
   box-sizing: border-box;
   /* overflow-y: auto; */
 }
@@ -23,14 +24,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 150px;
 }
 
-.accountright img:hover {
+.HoverAnimation:hover {
   transform: scale(1.1);
 }
 
-.accountright img {
+.HoverAnimation {
+  height: 12vmax !important;
+  width: 12vmax !important;
   transition: all 0.5s;
+  border: 4px solid white;
+}
+.HoverAnimation > img {
+  height: 12vmax !important;
+  width: 12vmax !important;
 }
 
 .accountright > h5 {
@@ -67,29 +76,46 @@
 .accountright > .rightDiv > div > button:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.253);
 }
-.accountright>.rightDiv > div > button {
+.accountright > .rightDiv > div > button {
   border: none;
   background-color: white;
   cursor: pointer;
   transition: all 0.5s;
   padding: 0.5vmax 1vmax;
 }
-
-
-
-@media screen and (max-width: 600px) {
-   /* .account {
-    grid-template-columns: 2fr 1fr;
-  }  */
-
-   .accountleft {
-    padding: 2vmax;
-
-    /* min-height: 90vh; */
+@media screen and (max-width: 1100px) {
+  .HoverAnimation {
+    height: 14vmax !important;
+    width: 14vmax !important;
   }
-
-  /* .accountright > a {
-    font: 100 1rem "Roboto";
-    margin-top: 6vw;
-  }  */
+  .HoverAnimation > img {
+    height: 14vmax !important;
+    width: 14vmax !important;
+  }
+}
+@media screen and (max-width: 900px) {
+  .accountleft {
+    padding: 5vmax;
+  }
+  .HoverAnimation {
+    height: 16vmax !important;
+    width: 16vmax !important;
+  }
+  .HoverAnimation > img {
+    height: 16vmax !important;
+    width: 16vmax !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .accountleft {
+    padding: 2vmax !important;
+  }
+  .HoverAnimation {
+    height: 18vmax !important;
+    width: 18vmax !important;
+  }
+  .HoverAnimation > img {
+    height: 18vmax !important;
+    width: 18vmax !important;
+  }
 }

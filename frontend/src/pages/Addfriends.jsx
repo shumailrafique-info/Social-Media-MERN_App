@@ -53,18 +53,10 @@ const Addfriends = () => {
       {loading && loading ? (
         <Loader />
       ) : (
-        <div
-          style={{
-            width: "100vw",
-            maxWidth: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          className=""
-        >
-          {users && users.length > 0 ? (
+        
+        <div className="AddFrindes">
+          <div className="addfriendleft"></div>
+          <div>{users && users.length > 0 ? (
             users.map((user1) => (
               <User
                 key={user1._id}
@@ -75,7 +67,9 @@ const Addfriends = () => {
             ))
           ) : (
             <Typography>No Users found</Typography>
-          )}
+          )}</div>
+          <div className="addfriendright"></div>
+          
         </div>
       )}
     </div>

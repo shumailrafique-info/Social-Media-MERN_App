@@ -14,6 +14,7 @@ const {
   resetPassword,
   getMyPosts,
   userPosts,
+  addCoverPic,
 } = require("../controllers/user");
 const uploadMiddleware = require("../middlewares/multer.js");
 
@@ -48,6 +49,10 @@ router.route("/forgot/password/:email").get(frogotPassword);
 router.route("/password/reset/:Token").put(resetPassword);
 
 router.route("/myposts").get(isAuthenticated, getMyPosts);
+
 router.route("/userposts/:id").get(isAuthenticated, userPosts);
+router
+  .route("/cover")
+  .post(isAuthenticated, uploadMiddleware.single("cover"), addCoverPic);
 
 module.exports = router;

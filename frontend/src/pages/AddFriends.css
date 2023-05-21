@@ -20,7 +20,7 @@
   margin-right: 10px;
 }
 .search-form-container > form > Button {
-  background-color: rgb(225, 90, 41);
+  background-color: rgb(5, 135, 241);
   margin: 10px 0px;
   height: 40px;
   width: 190px;
@@ -28,7 +28,7 @@
   color: white;
 }
 .search-form-container > form > Button:hover {
-  background-color: orangered;
+  background-color: rgb(1, 99, 180);
 }
 .search-form-container > form > .search-input {
   width: 100%;
@@ -38,10 +38,26 @@
   font-size: 1rem;
 }
 
+.AddFrindes {
+  width: "100vw";
+  max-width: "100%";
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 @media screen and (max-width: 600px) {
   .search-form-container > form {
     padding: 1vmax;
     width: 100%;
     margin: 0px 10px;
+  }
+  .AddFrindes {
+    grid-template-columns: 1fr;
+  }
+  .addfriendleft{
+    display: none;
+  }
+  .addfriendright{
+    display: none;
   }
 }

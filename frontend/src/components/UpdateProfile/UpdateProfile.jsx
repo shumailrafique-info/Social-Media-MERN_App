@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Avatar, Button } from "@mui/material";
 import "./UpdateProfile.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { updateProfile } from "../../redux/actions/postAction";
 import { loadUser } from "../../redux/actions/userAction";

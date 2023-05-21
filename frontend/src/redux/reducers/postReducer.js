@@ -153,6 +153,18 @@ export const likePostReducer = createReducer(
       state.loading = false;
       state.error = action.payload;
     },
+    //Add user Cpver pic Reducer
+    updateCoverPicRequest: (state, action) => {
+      state.loading = true;
+    },
+    updateCoverPicSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    updateCoverPicFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   }
 );
 

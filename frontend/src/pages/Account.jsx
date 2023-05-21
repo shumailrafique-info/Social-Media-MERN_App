@@ -1,14 +1,18 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import "./Account.css";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProfile, getMyPosts } from "../redux/actions/postAction";
+import {
+  addCoverpicture,
+  deleteProfile,
+  getMyPosts,
+} from "../redux/actions/postAction";
 import { useAlert } from "react-alert";
 import Loader from "../components/Loader/Loader";
 import Post from "../components/Post/Post";
 import { Avatar, Button, Dialog, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import User from "../components/User/User";
-import { logoutUser } from "../redux/actions/userAction";
+import { loadUser, logoutUser } from "../redux/actions/userAction";
 import { MoreVert } from "@mui/icons-material";
 import { Menu } from "@mui/material";
 import { MenuItem } from "@mui/material";
@@ -16,6 +20,7 @@ import { MenuItem } from "@mui/material";
 const Account = () => {
   const dispatch = useDispatch();
   const Alert = useAlert();
+  const coverImageInput = useRef();
 
   const { loading, error, posts } = useSelector((state) => state.myPosts);
   const { error: LikeError, message } = useSelector((state) => state.like);
@@ -48,6 +53,11 @@ const Account = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleClickonChangeImage = () => {
+    handleClose();
+    coverImageInput.current.click();
   };
 
   return (
@@ -85,9 +95,15 @@ const Account = () => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
-              style={{ marginLeft: "auto" }}
+              style={{
+                marginLeft: "auto",
+                position: "absolute",
+                color: "blue",
+                top: "2vmax",
+                right: "2vmax",
+              }}
             >
-              <MoreVert style={{ fontSize: "30px" }} />
+              <MoreVert style={{ fontSize: "2.5rem" }} />
             </Button>
             <Menu
               id="basic-menu"
@@ -114,6 +130,13 @@ const Account = () => {
                 <MenuItem>Change Password</MenuItem>
               </Link>
 
+              <Link
+                onClick={handleClickonChangeImage}
+                style={{ color: "black", textDecoration: "none" }}
+              >
+                <MenuItem>Change cover Image</MenuItem>
+              </Link>
+
               <MenuItem
                 onClick={async () => {
                   handleClose();
@@ -138,9 +161,37 @@ const Account = () => {
             </Menu>
 
             {/* Settings */}
-
+            <div
+              style={{
+                width: "100vw",
+                maxWidth: "100%",
+                height: "280px",
+                backgroundColor: "blue",
+                position: "absolute",
+                top: "0px",
+                zIndex: "-1",
+                backgroundImage: user.coverImage
+                  ? `url(${user.coverImage.url})`
+                  : `url(${user.avatar.url})`,
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+              }}
+            ></div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={async (e) => {
+                console.log(e.target.files[0]);
+                Alert.success("Updating..")
+                await dispatch(addCoverpicture(e.target.files[0]));
+                dispatch(loadUser());
+              }}
+              ref={coverImageInput}
+              hidden={true}
+            />
             <Avatar
-              style={{ height: "8vmax", width: "8vmax" }}
+              className="HoverAnimation"
               src={user.avatar.url}
               alt={user.name}
             />

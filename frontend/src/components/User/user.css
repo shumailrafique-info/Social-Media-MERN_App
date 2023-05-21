@@ -1,20 +1,26 @@
 .usercard {
-  border: 1px solid rgba(0, 0, 0, 0.253);
-  width: 300px;
-  text-align: center;
-  margin: 0.5vmax 0vmax;
-  border-radius: 5px;
+  width: 100%;
+  padding: 1vmax;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: .5vmax 0px;
+  transition: .4s ease all;
 }
-.usertext {
-  font-size: 1, 2vmax;
+.usercard:hover{
+ background-color: rgb(223, 220, 220);
 }
-
-@media screen and (max-width: 600px) {
+.usercard > a {
+  text-decoration: none;
+  display: flex;
+  color: black;
+  align-items: center;
+  gap: 15px;
+}
+@media screen and (max-width: 450px) {
   .usercard {
-    border: 1px solid rgba(0, 0, 0, 0.253);
-    width: 300px;
-    text-align: center;
-    margin: 0.5vmax 0vmax;
-    margin-right: 0px;
+    justify-content: flex-start;
+    min-height: 65px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.103);
   }
 }

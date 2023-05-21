@@ -82,10 +82,22 @@ const Post = ({
   };
 
   return (
-    <div className="post">
-      <div className="postHeader">
+    <div className="post" style={{margin:"1vmax 1vmax"}}>
+      <div className="postDetails">
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Avatar
+            src={ownerImage}
+            alt="User"
+            sx={{ height: "4vmax", width: "4vmax" }}
+            className="PostAvatar"
+          />
+          <Link to={`/user/${ownerId}`}>
+            <Typography fontWeight={700}>{ownerName}</Typography>
+          </Link>
+        </div>
         {isAccount ? (
           <Button
+            style={{ justifySelf: "flex-end" }}
             onClick={() => {
               setCaptionTogglet(!captionToggle);
             }}
@@ -94,36 +106,35 @@ const Post = ({
           </Button>
         ) : null}
       </div>
-      <img src={postImage} alt="Post" />
-      <div className="postDetails">
-        <Avatar
-          src={ownerImage}
-          alt="User"
-          sx={{ height: "3vmax", width: "3vmax" }}
-        />
-        <Link to={`/user/${ownerId}`}>
-          <Typography fontWeight={700}>{ownerName}</Typography>
-        </Link>
-        <Typography
-          fontWeight={400}
-          color={"rgba(0,0,0,0.582)"}
-          style={{ alignSelf: "center" }}
+      <p className="PostCaption">{caption}</p>
+      <img sty src={postImage} alt="Post" />
+      <hr />
+
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+        <button
+          onClick={() => setPostLikes(!postLikes)}
+          disabled={likes.length === 0 ? true : false}
+          style={{
+            border: "none",
+            backgroundColor: "white",
+            cursor: "pointer",
+            margin: "1vmax 2vmax",
+          }}
         >
-          {caption}
-        </Typography>
+          <Typography>{likes.length} Likes</Typography>
+        </button>
+        <button
+          style={{
+            border: "none",
+            backgroundColor: "white",
+            cursor: "pointer",
+            margin: "1vmax 2vmax",
+          }}
+        >
+          <Typography>{comments.length} Comments</Typography>
+        </button>
       </div>
-      <button
-        onClick={() => setPostLikes(!postLikes)}
-        disabled={likes.length === 0 ? true : false}
-        style={{
-          border: "none",
-          backgroundColor: "white",
-          cursor: "pointer",
-          margin: "1vmax 2vmax",
-        }}
-      >
-        <Typography>{likes.length} Likes</Typography>
-      </button>
+
       <div className="postFooter">
         <Button onClick={() => handleLike(postId)}>
           {liked && liked ? (

@@ -1,10 +1,10 @@
 .post {
-  width: 60%;
+  width: 100%;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  padding: 0 1vmax 2vmax;
-  margin: 2vmax;
+  /* padding: 0 1vmax 2vmax; */
+  margin:1vmax 0px;
 }
 
 .postHeader {
@@ -23,14 +23,30 @@
 }
 
 .postDetails {
+  width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 1vmax;
 }
 
-.postDetails > a {
+.postDetails >div> a {
   text-decoration: none;
   color: rgb(0, 0, 0);
   margin: 1vmax;
+}
+
+.PostCaption{
+  color: rgba(0, 0, 0, 0.459);
+  align-self: flex-start;
+  text-align: start;
+  padding: 5px;
+  padding-left: 1vmax;
+}
+.postFooter{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .postFooter > button {
@@ -69,14 +85,27 @@
   border-radius: 0%;
 }
 
+@media screen and (max-width: 420px) {
+  .PostCaption{
+   font-size: 1rem;
+  }
+}
 @media screen and (max-width: 600px) {
   .post {
     width: 100%;
-    border-radius: 0;
+    border-radius: 10px;
     box-shadow: none;
     border: 1px solid rgba(0, 0, 0, 0.068);
     padding: 0 0 4vw;
     margin: 0;
+  }
+  .PostAvatar{
+    width: 5vmax !important;
+    height: 5vmax !important;
+  }
+  .PostAvatar>img{
+    width: 5vmax;
+    height: 5vmax;
   }
   .DialogBox {
     min-width: 100%;
