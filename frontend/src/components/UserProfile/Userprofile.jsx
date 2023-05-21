@@ -112,6 +112,14 @@ const Userprofile = () => {
             )}
           </div>
           <div className="accountright">
+            <div
+              className="CoverPicDiv"
+              style={{
+                backgroundImage: thisUser.coverImage
+                  ? `url(${thisUser.coverImage.url})`
+                  : `url(${thisUser.avatar.url})`,
+              }}
+            ></div>
             {/* Settings */}
 
             {thisUser && user._id === thisUser._id ? (
@@ -122,9 +130,15 @@ const Userprofile = () => {
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
                   onClick={handleClick}
-                  style={{ marginLeft: "auto" }}
+                  style={{
+                    marginLeft: "auto",
+                    position: "absolute",
+                    color: "blue",
+                    top: "2vmax",
+                    right: "2vmax",
+                  }}
                 >
-                  <MoreVert style={{ fontSize: "30px" }} />
+                  <MoreVert style={{ fontSize: "2.5rem" }} />
                 </Button>
                 <Menu
                   id="basic-menu"
@@ -229,6 +243,7 @@ const Userprofile = () => {
             {/* Settings */}
 
             <Avatar
+              className="HoverAnimation"
               style={{ height: "8vmax", width: "8vmax" }}
               src={thisUser && thisUser.avatar.url}
               alt={thisUser && thisUser.name}

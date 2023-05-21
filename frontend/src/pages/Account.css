@@ -83,6 +83,18 @@
   transition: all 0.5s;
   padding: 0.5vmax 1vmax;
 }
+.CoverPicDiv {
+  width: 100vw;
+  max-width: 100%;
+  height: 280px;
+  position: absolute;
+  top: 0px;
+  z-index: -1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 @media screen and (max-width: 1100px) {
   .HoverAnimation {
     height: 14vmax !important;
@@ -117,5 +129,8 @@
   .HoverAnimation > img {
     height: 18vmax !important;
     width: 18vmax !important;
+  }
+  .CoverPicDiv {
+    height: 250px;
   }
 }

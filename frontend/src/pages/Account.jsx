@@ -162,20 +162,11 @@ const Account = () => {
 
             {/* Settings */}
             <div
+              className="CoverPicDiv"
               style={{
-                width: "100vw",
-                maxWidth: "100%",
-                height: "280px",
-                backgroundColor: "blue",
-                position: "absolute",
-                top: "0px",
-                zIndex: "-1",
                 backgroundImage: user.coverImage
                   ? `url(${user.coverImage.url})`
                   : `url(${user.avatar.url})`,
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
               }}
             ></div>
             <input
@@ -183,7 +174,7 @@ const Account = () => {
               accept="image/*"
               onChange={async (e) => {
                 console.log(e.target.files[0]);
-                Alert.success("Updating..")
+                Alert.success("processing....");
                 await dispatch(addCoverpicture(e.target.files[0]));
                 dispatch(loadUser());
               }}
