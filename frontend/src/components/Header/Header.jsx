@@ -18,27 +18,31 @@ const Header = () => {
   return (
     <div className="header">
       <Link to={"/"} onClick={() => setTab("/")}>
-        {tab === "/" ? <Home style={{ color: "black" }} /> : <HomeOutlined />}
+        {tab === "/" ? (
+          <Home style={{ color: "rgb(5, 135, 241)" }} />
+        ) : (
+          <HomeOutlined style={{ color: "rgba(36, 95, 143,.7)" }} />
+        )}
       </Link>
       <Link to={"/newpost"} onClick={() => setTab("/newpost")}>
         {tab === "/newpost" ? (
-          <Add style={{ color: "black" }} />
+          <Add style={{ color: "rgb(5, 135, 241)" }} />
         ) : (
-          <AddOutlined />
+          <AddOutlined style={{ color: "rgba(36, 95, 143,.7)" }} />
         )}
       </Link>
       <Link to={"/addfriends"} onClick={() => setTab("/addfriends")}>
         {tab === "/addfriends" ? (
-          <AddReactionIcon style={{ color: "black" }} />
+          <AddReactionIcon style={{ color: "rgb(5, 135, 241)" }} />
         ) : (
-          <AddReactionOutlinedIcon />
+          <AddReactionOutlinedIcon style={{ color: "rgba(36, 95, 143,.7)" }} />
         )}
       </Link>
       <Link to={"/account"} onClick={() => setTab("/account")}>
         {tab === "/account" ? (
-          <AccountCircle style={{ color: "black" }} />
+          <AccountCircle style={{ color: "rgb(5, 135, 241)" }} />
         ) : (
-          <AccountCircleOutlined />
+          <AccountCircleOutlined style={{ color: "rgba(36, 95, 143,.7)" }} />
         )}
       </Link>
     </div>
