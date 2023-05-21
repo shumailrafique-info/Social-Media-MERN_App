@@ -115,9 +115,9 @@ const Userprofile = () => {
             <div
               className="CoverPicDiv"
               style={{
-                backgroundImage: thisUser.coverImage
-                  ? `url(${thisUser.coverImage.url})`
-                  : `url(${thisUser.avatar.url})`,
+                backgroundImage:thisUser && thisUser.coverImage
+                  ? `url(${thisUser && thisUser.coverImage.url})`
+                  : `url(${thisUser && thisUser.avatar.url})`,
               }}
             ></div>
             {/* Settings */}
