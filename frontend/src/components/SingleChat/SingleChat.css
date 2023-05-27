@@ -1,7 +1,7 @@
 .Signle-Chat-Section {
   width: 100vw;
   max-width: 100%;
-  height: calc(100vh - 6vmax);
+  height: calc(100vh - 4.1vmax);
 }
 /* @media screen and (max-width: 800px) {
   .Signle-Chat-Section {
@@ -9,13 +9,16 @@
     max-width: 100%;
     height: 95.6vh;
   }
-}
+} */
 @media screen and (max-width: 600px) {
   .Signle-Chat-Section {
     height: calc(100vh - 6.5vmax);
+  }
+  .Signle-Chat-Section {
+    height: calc(100vh - 13.5vmax);
+  }
 }
-}
-@media screen and (max-width: 500px) {
+/* @media screen and (max-width: 500px) {
     .Signle-Chat-Section {
         height: calc(100vh - 6vmax);
     }
