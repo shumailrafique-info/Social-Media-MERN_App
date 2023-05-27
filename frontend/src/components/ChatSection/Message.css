@@ -9,6 +9,7 @@
   flex-direction: column;
   color: gray;
   font-weight: 300;
+  gap: 10px;
 }
 .message .messageInfo img {
   width: 40px;
