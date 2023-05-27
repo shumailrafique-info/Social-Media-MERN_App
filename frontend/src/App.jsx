@@ -17,6 +17,8 @@ import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Userprofile from "./components/UserProfile/Userprofile";
 import NotFound from "./components/NotFound/NotFound.jsx";
 import Info from "./components/Info/Info.jsx";
+import UserChat from "./components/UserChat/UserChat";
+import SingleChat from "./components/SingleChat/SingleChat";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -103,9 +105,18 @@ function App() {
             }
           />
           <Route
-            path="/created/by"
-            element={<Info/>}
+            path="/user/chats/:id"
+            element={
+              isAuthenticated && isAuthenticated ? <UserChat /> : <Login />
+            }
           />
+          <Route
+            path="/chat/with"
+            element={
+              isAuthenticated && isAuthenticated ? <SingleChat /> : <Login />
+            }
+          />
+          <Route path="/created/by" element={<Info />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

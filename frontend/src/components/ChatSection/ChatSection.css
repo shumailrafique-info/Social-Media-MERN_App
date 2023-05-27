@@ -1,0 +1,81 @@
+.chatSection {
+  width: 100%;
+  height: 100%;
+}
+.top-user-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  height: 10%;
+  background-color: #5d5b8d;
+}
+.top-user-info .user-info-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.top-user-info .user-info-left img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.user-info-right {
+  margin: 0px 20px;
+  cursor: pointer;
+}
+
+.Messages {
+  width: 100%;
+  background-color: #ddddf7;
+  height: calc(80%);
+  padding: 10px;
+  overflow-y: scroll;
+}
+.send-input-box {
+  height: 10%;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.send-input-box input {
+  height: 100%;
+  outline: none;
+  padding: 10;
+  border: none;
+  padding-left: 20px;
+  /* background-color: blue; */
+  width: 100%;
+  font-size: 1rem;
+}
+.send-input-box input::placeholder {
+  color: rgba(0, 0, 0, 0.541);
+}
+
+.send-input-box .send {
+  height: 100%;
+  width: 15%;
+  position: relative;
+}
+.send-input-box .send button {
+  width: 100%;
+  background-color: rgb(5, 135, 241);
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.send-input-box .send button:hover {
+  background-color: rgb(36, 95, 143);
+}
+
+@media screen and (max-width: 800px) {
+  .send-input-box .send {
+    height: 100%;
+    width: 30%;
+  }
+}

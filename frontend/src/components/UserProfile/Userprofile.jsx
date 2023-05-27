@@ -13,14 +13,23 @@ import {
 } from "@mui/material";
 import User from "../User/User";
 import { getSingleUser, logoutUser } from "../../redux/actions/userAction";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { MoreVert } from "@mui/icons-material";
 import { deleteProfile, followUser } from "../../redux/actions/postAction";
+import {
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../../firebase";
 
 const Userprofile = () => {
   const dispatch = useDispatch();
   const Alert = useAlert();
   const { id } = useParams();
+  const Navigate = useNavigate();
 
   const {
     loading,
@@ -84,6 +93,62 @@ const Userprofile = () => {
     setAnchorEl(null);
   };
 
+  const handleSelect = async () => {
+    //check wether the group exists
+    const combinedId =
+      user._id > thisUser._id
+        ? user._id + thisUser._id
+        : thisUser._id + user._id;
+    try {
+      const res = await getDoc(doc(db, "chats", combinedId));
+      if (!res.exists()) {
+        console.log("not exists");
+        //create Chat
+        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+        //user chats
+        // To update age and favorite color:
+        await updateDoc(doc(db, "userChats", user._id), {
+          [combinedId + ".userInfo"]: {
+            _id: thisUser._id,
+            name: thisUser.name,
+            avatar: thisUser.avatar.url,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+
+        //Same for Other user
+        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+        //user chats
+        // To update age and favorite color:
+        await updateDoc(doc(db, "userChats", thisUser._id), {
+          [combinedId + ".userInfo"]: {
+            _id: user._id,
+            name: user.name,
+            avatar: user.avatar.url,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+      }
+      dispatch({
+        type: "changeUser",
+        payload: {
+          user: {
+            _id: thisUser._id,
+            name: thisUser.name,
+            avatar: thisUser.avatar.url,
+          },
+          ChatId:
+            user._id > thisUser._id
+              ? user._id + thisUser._id
+              : thisUser._id + user._id,
+        },
+      });
+      Navigate(`/user/chats/${user._id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Fragment>
       {(loading && loading === true) || userLoading === true ? (
@@ -115,9 +180,10 @@ const Userprofile = () => {
             <div
               className="CoverPicDiv"
               style={{
-                backgroundImage:thisUser && thisUser.coverImage
-                  ? `url(${thisUser && thisUser.coverImage.url})`
-                  : `url(${thisUser && thisUser.avatar.url})`,
+                backgroundImage:
+                  thisUser && thisUser.coverImage
+                    ? `url(${thisUser && thisUser.coverImage.url})`
+                    : `url(${thisUser && thisUser.avatar.url})`,
               }}
             ></div>
             {/* Settings */}
@@ -286,6 +352,7 @@ const Userprofile = () => {
                 {following ? "Unfollow" : "Follow"}
               </Button>
               <Button
+                onClick={handleSelect}
                 style={{
                   width: "100%",
                   minWidth: "150px",
@@ -294,7 +361,7 @@ const Userprofile = () => {
                     thisUser && user._id === thisUser._id ? "none" : "block",
                 }}
                 variant="contained"
-                disabled={true}
+                // disabled={true}
               >
                 Message
               </Button>

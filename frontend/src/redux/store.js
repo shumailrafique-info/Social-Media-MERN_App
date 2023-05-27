@@ -3,6 +3,7 @@ import {
   allUsersReducer,
   getSingleUser,
   postOfFollowingReducer,
+  userChatReducer,
   userReducer,
 } from "./reducers/userReducer";
 import { getMyPosts, likePostReducer } from "./reducers/postReducer";
@@ -14,7 +15,8 @@ const store = configureStore({
     allUsers: allUsersReducer,
     like: likePostReducer,
     myPosts: getMyPosts,
-    singleUser:getSingleUser
+    singleUser: getSingleUser,
+    userChat: userChatReducer,
   },
 });
 

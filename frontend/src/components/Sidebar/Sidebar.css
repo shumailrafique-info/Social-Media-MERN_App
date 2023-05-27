@@ -1,0 +1,35 @@
+.SidebarContainer {
+  background-color: rgb(87, 87, 221);
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+.SidebarContainer .SingleChat-user {
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  cursor: pointer;
+}
+.SidebarContainer .SingleChat-user:hover {
+  background-color: rgb(226, 226, 226);
+}
+.SidebarContainer .SingleChat-user img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.Name-LastMessage {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+}
+.Name-LastMessage .message {
+  opacity: 0.6;
+  font-size: 0.9rem;
+}

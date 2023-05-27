@@ -90,6 +90,19 @@ export const postOfFollowingReducer = createReducer(
     },
   }
 );
+
+const stateInitialofChat = localStorage.getItem("userChat")
+  ? JSON.parse(localStorage.getItem("userChat"))
+  : { ChatId: "null", user: {} };
+
+export const userChatReducer = createReducer(stateInitialofChat, {
+  changeUser: (state, action) => {
+    state.user = action.payload.user;
+    state.ChatId = action.payload.ChatId;
+
+    localStorage.setItem("userChat", JSON.stringify(state));
+  },
+});
 export const getSingleUser = createReducer(
   {},
   {

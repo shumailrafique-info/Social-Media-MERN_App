@@ -1,4 +1,6 @@
 import axios from "axios";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 export const loginUser = (email, password) => async (dispatch) => {
   try {
@@ -31,6 +33,7 @@ export const registerUser =
         }
       );
       dispatch({ type: "RegisterSuccess", payload: data.user });
+      await setDoc(doc(db, "userChats", data.user._id), {});
     } catch (error) {
       dispatch({
         type: "RegisterFailure",

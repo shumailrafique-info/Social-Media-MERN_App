@@ -1,0 +1,68 @@
+.userChatContainer {
+  background-color: rgb(206, 203, 203);
+  width: 100vw;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 91vh;
+  min-height: 90vh;
+}
+.chatWrapper {
+  background-color: rgb(145, 145, 145);
+  border: 1px solid black;
+  width: 80%;
+  height: 90%;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+}
+.chatWrapper .top-bar {
+  width: 340px;
+  background-color: rgb(190, 187, 187);
+}
+.chatWrapper .bottom-bar {
+  width: 100%;
+  color: white;
+  background-color: rgb(160, 160, 160);
+}
+
+@media screen and (max-width: 800px) {
+  .userChatContainer {
+    width: 100vw;
+    max-width: 100%;
+    height: 95.4vh;
+  }
+  .chatWrapper {
+    border: none;
+    width: 1000%;
+    height: 100%;
+    border-radius: none;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+  }
+  .chatWrapper .bottom-bar {
+    display: none;
+  }
+  .chatWrapper .top-bar {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .userChatContainer {
+    height: 92vh;
+  }
+}
+@media screen and (max-width: 500px) {
+  .userChatContainer {
+    height: 93.3vh;
+  }
+}
+@media screen and (max-width: 380px) {
+  .userChatContainer {
+    height: 94.7vh;
+  }
+}
