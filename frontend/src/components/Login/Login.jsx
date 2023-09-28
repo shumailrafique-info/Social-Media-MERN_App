@@ -47,6 +47,10 @@ const Login = () => {
           >
             Login
           </h1>
+          <div  className="testing-user">
+            <h2>For Visitors</h2>
+            Email:- visitor@gmail.com <br /> Password:- visitor-pass
+          </div>
           <input
             type="email"
             placeholder="Email"

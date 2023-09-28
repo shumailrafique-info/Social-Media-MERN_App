@@ -92,7 +92,11 @@
 .login-absolute-4 {
   display: none;
 }
-
+.testing-user{
+  position: absolute;
+  left: 20px;
+  bottom: 30px;
+}
 @media screen and (max-width: 700px) {
   .login-absolute-1 {
     position: absolute;
@@ -150,6 +154,13 @@
     background-color: rgb(8, 126, 223);
     border-radius: 50%;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  }
+  .testing-user{
+    position: absolute;
+    left: unset;
+    bottom: unset;
+    right: 20px;
+    bottom: 30px;
   }
 }
 @media screen and (max-width: 600px) {
